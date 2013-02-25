@@ -1,0 +1,85 @@
+//
+//  FMStepperDemoTests.m
+//  FMStepperDemoTests
+//
+//  Created by Jason Aftosmis on 2/24/13.
+//  Copyright (c) 2013 Fast Miso Software, LLC. All rights reserved.
+//
+//
+//  TODO:
+//  - N.B. It's not currently possible to test FMStepper's `wraps` property via its public interface
+//
+
+#import "FMStepperDemoTests.h"
+#import "FMStepper.h"
+
+
+@interface FMStepperDemoTests ()
+
+@property (strong, nonatomic) FMStepper *stepper;
+
+@end
+
+
+@implementation FMStepperDemoTests
+
+- (void)setUp
+{
+    [super setUp];
+
+	CGRect frame = CGRectMake(0.0f, 0.0f, 200.0f, 120.0f);
+	self.stepper = [[FMStepper alloc] initWithFrame:frame];
+	self.stepper.minimumValue =  1.0f;
+	self.stepper.maximumValue = 10.0f;
+	self.stepper.stepValue    =  1.0f;
+}
+
+- (void)tearDown
+{
+	self.stepper = nil;
+	
+    [super tearDown];
+}
+
+- (void)testExceptionOnBadMinimumValue
+{
+	STAssertThrows([self.stepper setMinimumValue:11.0f],
+				   @"FMStepper should have thrown an exception when given a bad minimum value");
+}
+
+- (void)testExceptionOnBadMaximumValue
+{
+	STAssertThrows([self.stepper setMaximumValue:0.0f],
+				   @"FMStepper should have thrown an exception when given a bad maximum value");
+}
+
+- (void)testExceptionOnBadStepValue
+{
+	STAssertThrows([self.stepper setStepValue:-1.0f],
+				   @"FMStepper should have thrown an exception when given a bad step value");
+}
+
+- (void)testSettingValue
+{
+	[self.stepper setValue:self.stepper.minimumValue];
+	double newValue = self.stepper.minimumValue + self.stepper.stepValue;
+	[self.stepper setValue:newValue];
+	STAssertEquals(self.stepper.value, newValue,
+				   @"FMStepper failed to set and get its own value property properly");
+}
+
+- (void)testSettingValueBelowRangeValueBecomesUsesMinimum
+{
+	[self.stepper setValue:(self.stepper.minimumValue - 1.0f)];
+	STAssertEquals(self.stepper.value, self.stepper.minimumValue,
+				   @"FMStepper should have used the minimum value when asked to set value below minimum");
+}
+
+- (void)testSettingValueAboveRangeValueBecomesUsesMaximum
+{
+	[self.stepper setValue:(self.stepper.maximumValue + 1.0f)];
+	STAssertEquals(self.stepper.value, self.stepper.maximumValue,
+				   @"FMStepper should have used the maximum value when asked to set value below maximum");
+}
+
+@end
