@@ -80,10 +80,11 @@
 
 /**
  As in UIStepper: "The step, or increment, value for the stepper...
-	Must be numerically greater than minimumValue.
-	If you attempt to set a value equal to or lower than minimumValue,
-	the system raises an `NSInvalidArgumentException` exception.
+	Must be numerically greater than 0. If you attempt to set this property’s value
+	to 0 or to a negative number, the system raises an NSInvalidArgumentException exception.
 	The default value for this property is 1."
+ `FMStepper` adds the additional constraint that stepValue must not exceed the maximumValue,
+	raising an NSInvalidArgumentException exception in that case.
  */
 @property (assign, nonatomic) double stepValue;
 

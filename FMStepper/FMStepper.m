@@ -264,7 +264,7 @@ static CGFloat const kFMStepperDefaultAutorepeatInterval = 0.35f; // Default tim
 {
 	if (minimumValue > self.maximumValue) {
 
-		NSString *reason = [NSString stringWithFormat:@"Invalid minimumValue (%f) given a maximumValue of %f",
+		NSString *reason = [NSString stringWithFormat:@"Invalid minimumValue (%f) in light of current maximumValue (%f)",
 							minimumValue, self.maximumValue];
 		NSException *ex = [NSException exceptionWithName:NSInvalidArgumentException
 												  reason:reason
@@ -280,7 +280,7 @@ static CGFloat const kFMStepperDefaultAutorepeatInterval = 0.35f; // Default tim
 {
 	if (maximumValue < self.minimumValue) {
 
-		NSString *reason = [NSString stringWithFormat:@"Invalid maximumValue (%f) given a minimumValue of %f",
+		NSString *reason = [NSString stringWithFormat:@"Invalid maximumValue (%f) in light of current minimumValue (%f)",
 							self.minimumValue, maximumValue];
 		NSException *ex = [NSException exceptionWithName:NSInvalidArgumentException
 												  reason:reason
@@ -294,16 +294,28 @@ static CGFloat const kFMStepperDefaultAutorepeatInterval = 0.35f; // Default tim
 
 - (void)setStepValue:(double)stepValue
 {
+	NSString *reason = nil;
+
 	if (stepValue <= 0) {
 
-		NSString *reason = [NSString stringWithFormat:@"Invalid stepValue (%f). Cannot be zero or negative.",
-							stepValue];
+		reason = [NSString stringWithFormat:@"Invalid stepValue (%f). Cannot be zero or negative value.",
+				  stepValue];
+		
+	} else if (stepValue > self.maximumValue) {
+
+		// This is not enforced in UIStepper. Can't think of a reason *not* to enforce it, however unlikely
+		// it is that the input would be this insane.
+		reason = [NSString stringWithFormat:@"Invalid stepValue (%f). Cannot be greater than the maximum value (%f).",
+				  stepValue, self.maximumValue];
+	}
+	
+	if (reason) {
 		NSException *ex = [NSException exceptionWithName:NSInvalidArgumentException
 												  reason:reason
 												userInfo:nil];
 		@throw ex;
 	}
-
+	
 	_stepValue = stepValue;
 }
 
@@ -430,6 +442,7 @@ static CGFloat const kFMStepperDefaultAutorepeatInterval = 0.35f; // Default tim
 	} else if (sender == self.increaseStepperButton) {
 
 		changeValue = self.stepValue;
+		
 	} else {
 
 		NSLog(@"[%@ %@]- Unrecognized sender: %@",

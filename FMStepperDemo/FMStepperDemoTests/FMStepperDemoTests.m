@@ -53,10 +53,17 @@
 				   @"FMStepper should have thrown an exception when given a bad maximum value");
 }
 
-- (void)testExceptionOnBadStepValue
+- (void)testExceptionOnNegativeStepValue
 {
 	STAssertThrows([self.stepper setStepValue:-1.0f],
-				   @"FMStepper should have thrown an exception when given a bad step value");
+				   @"FMStepper should have thrown an exception when given a negative step value");
+}
+
+- (void)testExceptionOnGreaterThanMaximumStepValue
+{
+	double newStepValue = self.stepper.maximumValue + 1.0f;
+	STAssertThrows([self.stepper setStepValue:newStepValue],
+				   @"FMStepper should have thrown an exception when given a too large of a step value");
 }
 
 - (void)testSettingValue
