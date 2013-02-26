@@ -123,6 +123,8 @@ static CGFloat const kFMStepperDefaultAutorepeatInterval = 0.35f; // Default tim
 	CGFloat fieldWidth = frame.size.width - (2 * buttonWidth);
 
 	// Use the system font by default; calculate max size from height of frame
+	// We don't actually set the title on the button, since the +/- is drawn
+	// in the FMStepperButton's drawRect
 	self.textFont = [UIFont systemFontOfSize:(0.95 * controlHeight)];
 
 	// LHS Decreasing Stepper Button
@@ -131,10 +133,6 @@ static CGFloat const kFMStepperDefaultAutorepeatInterval = 0.35f; // Default tim
 																  style:FMStepperButtonStyleLeft];
 	self.decreaseStepperButton.autoresizingMask = UIViewAutoresizingNone;
 	self.decreaseStepperButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-//	[self.decreaseStepperButton setTitle:@"–"
-//								forState:UIControlStateNormal];
-//	[self.decreaseStepperButton setTitleColor:[UIColor whiteColor]
-//									 forState:UIControlStateNormal];
 	[self.decreaseStepperButton addTarget:self
 								   action:@selector(buttonPressed:)
 						 forControlEvents:UIControlEventTouchUpInside];
@@ -167,10 +165,6 @@ static CGFloat const kFMStepperDefaultAutorepeatInterval = 0.35f; // Default tim
 																  style:FMStepperButtonStyleRight];
 	self.increaseStepperButton.autoresizingMask = UIViewAutoresizingNone;
 	self.increaseStepperButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
-//	[self.increaseStepperButton setTitle:@"+"
-//								forState:UIControlStateNormal];
-//	[self.increaseStepperButton setTitleColor:[UIColor whiteColor]
-//									 forState:UIControlStateNormal];
 	[self.increaseStepperButton addTarget:self
 								   action:@selector(buttonPressed:)
 						 forControlEvents:UIControlEventTouchUpInside];
