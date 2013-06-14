@@ -17,6 +17,7 @@ The code to create and configure an `FMStepper` might look something like this:
 	[stepper setFont:@"Avenir-Book" size:22.0f];
 	[stepper setTintColor:[UIColor blueColor]];
 	[stepper setCornerRadius:5.0f];
+	[stepper setAccessibilityTag:@"columns"];
 	
 	// Add
 	[self.view addSubview:stepper];
