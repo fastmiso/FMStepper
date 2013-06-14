@@ -55,6 +55,7 @@
 	CGRect frame1 = CGRectMake(xPos1, yPos1, controlWidth1, controlHeight1);
 
 	self.stepper1 = [FMStepper stepperWithFrame:frame1 min:0 max:10 step:1 value:5];
+	[self.stepper1 setAccessibilityTag:@"Random"];
 	[self.stepper1 addTarget:self
 					  action:@selector(stepperChanged:)
 			forControlEvents:UIControlEventValueChanged];
@@ -70,10 +71,11 @@
 	CGRect frame2 = CGRectMake(xPos2, yPos2, controlWidth2, controlHeight2);
 
 	self.stepper2 = [FMStepper stepperWithFrame:frame2 min:0.0f max:100.0f step:5.0f value:50.0f];
-	[self.stepper2 setFont:@"Avenir-Medium" size:24.0f];
+	[self.stepper2 setFont:@"HelveticaNeue-Light" size:24.0f];
 	UIColor *cardinal = [UIColor colorWithRed:(108/255.0f) green:(22/255.0f) blue:(31/255.0f) alpha:1.0];
 	[self.stepper2 setTintColor:cardinal];
 	[self.stepper2 setCornerRadius:0.0f];
+	[self.stepper2 setAccessibilityTag:@"Cardinal"];
 	[self.stepper2 addTarget:self
 					  action:@selector(stepperChanged:)
 			forControlEvents:UIControlEventValueChanged];
@@ -90,6 +92,7 @@
 
 	self.stepper3 = [FMStepper stepperWithFrame:frame3 min:0.0f max:5.0f step:1.0f value:1.0f];
 	self.stepper3.wraps = YES;
+	[self.stepper3 setAccessibilityTag:@"Blue"];
 	[self.stepper3 setTintColor:[UIColor blueColor]];
 	[self.stepper3 setCornerRadius:20.0f];
 	[self.stepper3 addTarget:self

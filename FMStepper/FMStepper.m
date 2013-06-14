@@ -130,7 +130,7 @@ static CGFloat const kFMStepperDefaultAutorepeatInterval = 0.35f; // Default tim
 	// LHS Decreasing Stepper Button
 	CGRect decreaseStepperFrame = CGRectMake(0.0f, 0.0f, buttonWidth, controlHeight);
 	self.decreaseStepperButton = [[FMStepperButton alloc] initWithFrame:decreaseStepperFrame
-																  style:FMStepperButtonStyleLeft];
+																  style:FMStepperButtonStyleLeftMinus];
 	self.decreaseStepperButton.autoresizingMask = UIViewAutoresizingNone;
 	self.decreaseStepperButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 	[self.decreaseStepperButton addTarget:self
@@ -162,7 +162,7 @@ static CGFloat const kFMStepperDefaultAutorepeatInterval = 0.35f; // Default tim
 	CGRect increaseStepperFrame = CGRectMake(buttonWidth + fieldWidth, 0.0f,
 											 buttonWidth, controlHeight);
 	self.increaseStepperButton = [[FMStepperButton alloc] initWithFrame:increaseStepperFrame
-																  style:FMStepperButtonStyleRight];
+																  style:FMStepperButtonStyleRightPlus];
 	self.increaseStepperButton.autoresizingMask = UIViewAutoresizingNone;
 	self.increaseStepperButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
 	[self.increaseStepperButton addTarget:self
@@ -332,6 +332,18 @@ static CGFloat const kFMStepperDefaultAutorepeatInterval = 0.35f; // Default tim
 		_autorepeatInterval = autorepeatInterval;
 		self.autorepeat = NO;
 	}
+}
+
+
+- (void)setAccessibilityTag:(NSString *)accessibilityTag
+{
+	_accessibilityTag = accessibilityTag;
+
+	self.valueTextField.accessibilityLabel = [NSString stringWithFormat:@"%@ value", accessibilityTag];
+	self.valueTextField.accessibilityHint = [NSString stringWithFormat:@"Edit value of %@", accessibilityTag];
+
+	[self.decreaseStepperButton configureAccessibilityWithTag:accessibilityTag];
+	[self.increaseStepperButton configureAccessibilityWithTag:accessibilityTag];
 }
 
 

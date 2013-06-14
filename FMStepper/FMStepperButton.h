@@ -32,8 +32,8 @@
  An enumeration for the various styles of stepper buttons.
  */
 typedef NS_ENUM(NSInteger, FMStepperButtonStyle) {
-    FMStepperButtonStyleLeft,
-    FMStepperButtonStyleRight,
+    FMStepperButtonStyleLeftMinus,
+    FMStepperButtonStyleRightPlus,
     FMStepperButtonStyleCount
 };
 
@@ -83,5 +83,11 @@ typedef NS_ENUM(NSInteger, FMStepperButtonStyle) {
 	@return An initialized view object or nil if the object couldn't be created.
  */
 - (id)initWithFrame:(CGRect)frame style:(FMStepperButtonStyle)style;
+
+
+/**
+ Set the tag/name to use when describing the variable with VoiceOver via UIAccessibility.
+ */
+- (void)configureAccessibilityWithTag:(NSString *)tag;
 
 @end

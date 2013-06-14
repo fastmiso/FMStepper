@@ -129,6 +129,12 @@
 @property (assign, nonatomic) double autorepeatInterval;
 
 
+/**
+ The tag to be used in accessibility descriptions (label, hint, value).
+ */
+@property (copy, nonatomic) NSString *accessibilityTag;
+
+
 ///------------------------------------
 /// @name Accessing the Stepper’s Value
 ///------------------------------------

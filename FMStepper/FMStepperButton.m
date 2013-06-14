@@ -50,10 +50,30 @@
 		self.style = style;
 		self.cornerRadius = 0.2f * frame.size.height; // Currently 20% of frame height
 		self.color = [UIColor darkGrayColor]; // This also sets currentColor property
-		self.backgroundColor = [UIColor clearColor];		
+		self.backgroundColor = [UIColor clearColor];
     }
 	
     return self;
+}
+
+
+- (void)configureAccessibilityWithTag:(NSString *)tag
+{
+	switch (self.style) {
+		case FMStepperButtonStyleLeftMinus:
+			self.accessibilityLabel = [NSString stringWithFormat:@"Decrement %@ button",
+									   (tag && [tag length]) ? tag : @"stepper"];
+			self.accessibilityHint = [NSString stringWithFormat:@"Decrement %@ value",
+									  (tag && [tag length]) ? tag : @"stepper"];
+			break;
+		case FMStepperButtonStyleRightPlus:
+			self.accessibilityLabel = [NSString stringWithFormat:@"Increment %@ button",
+									   (tag && [tag length]) ? tag : @"stepper"];
+			self.accessibilityHint = [NSString stringWithFormat:@"Increment %@ value",
+									  (tag && [tag length]) ? tag : @"stepper"];
+		default:
+			break;
+	}
 }
 
 
@@ -83,10 +103,10 @@
 	CGSize  cornerRadii  = CGSizeMake(self.cornerRadius, self.cornerRadius);
 	UIRectCorner cornerSettings = 0;
 	switch (self.style) {
-		case FMStepperButtonStyleLeft:
+		case FMStepperButtonStyleLeftMinus:
 			cornerSettings = UIRectCornerTopLeft | UIRectCornerBottomLeft;
 			break;
-		case FMStepperButtonStyleRight:
+		case FMStepperButtonStyleRightPlus:
 			cornerSettings = UIRectCornerTopRight | UIRectCornerBottomRight;
 			break;
 		default:
@@ -102,10 +122,10 @@
 	[roundedRectanglePath fill];
 	
 	switch (self.style) {
-		case FMStepperButtonStyleLeft:
+		case FMStepperButtonStyleLeftMinus:
 			[self drawMinusSymbol:rect];
 			break;
-		case FMStepperButtonStyleRight:
+		case FMStepperButtonStyleRightPlus:
 			[self drawPlusSymbol:rect];
 			break;
 		default:
